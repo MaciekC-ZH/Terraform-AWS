@@ -1,0 +1,16 @@
+# 1. Katalog wtyczek pobierany przez 'terraform init' (waży setki MB)
+.terraform/
+.terraform.lock.hcl
+
+# 2. Pliki stanu Terraforma (zawierają sekrety i aktualny stan chmury)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# 3. Pliki z wartościami zmiennych (gdzie możesz trzymać sekrety)
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
