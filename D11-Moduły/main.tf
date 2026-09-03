@@ -41,3 +41,12 @@ module "prod_web_server" {
   server_name   = "prod-app-server"
   environment   = "prod"
 }
+
+module "staging_web_server" {
+  source = "./modules/web-server"
+
+  ami_id        = data.aws_ami.latest_ubuntu.id
+  instance_type = "t3.small" #lub small
+  server_name   = "staging-app-server"
+  environment   = "staging"
+}
