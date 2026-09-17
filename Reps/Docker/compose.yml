@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  cache:
+    image: redis:alpine
+    container_name: redis_db
+    volumes:
+      - redis_data:/data
+  app:
+    image: moje-api:1.0
+    container_name: api-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=cache
+    depends_on:
+      - cache
+volumes:
+  redis_data:
+
+  
+# docker compose up -d – uruchamia w tle zarówno cache, jak i app.
+
+# docker compose logs -f app – podgląda na żywo logi samej aplikacji (lub bez podania nazwy, by widzieć logi obu kontenerów naraz).
+
+# docker compose down – gasi oba kontenery i sprząta sieć.
+
