@@ -1,0 +1,26 @@
+---
+- name: Przygotowanie serwera
+  hosts: all
+  become: true
+  vars:
+    app_env: "staging"
+    app_port: 8080
+
+  tasks:
+    - name: instalacja
+      ansible.builtin.apt:
+        name:
+          - curl
+        state: present
+
+    - name: directory
+      ansible.builtin.file:
+        state: directory
+        path: /opt/app
+        owner: root
+
+    - name: copy
+      ansible.builtin.template:
+        src: templates/app.conf.j2
+        dest: /opt/app/app.conf
+        # content: "ENVIRONMENT={{ app_env }}\n PORT={{ app_port }}"
