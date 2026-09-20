@@ -1,0 +1,31 @@
+---
+- name: Adv Web
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Loop
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nginx
+        - ufw
+
+    - name: Notify
+      ansible.builtin.template:
+        src: templates/site.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Przeladuj nginx
+
+    - name: Conditional
+      ansible.builtin.file:
+        state: directory
+        path: /var/log/custom_audit
+      when: enable_audit | default(false)
+
+  handlers:
+    - name: Przeladuj nginx
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded

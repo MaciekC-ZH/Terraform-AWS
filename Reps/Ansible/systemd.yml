@@ -1,0 +1,16 @@
+---
+- name: Nginx setup
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: instalacja
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+
+    - name: autostart
+      ansible.builtin.systemd:
+        name: nginx
+        state: started
+        enabled: true
