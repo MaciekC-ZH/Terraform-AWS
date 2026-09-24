@@ -1,0 +1,20 @@
+---
+- name: Konfig srodowiska bazowego
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Pakiety systemowe
+      ansible.builtin.apt:
+        update_cache: yes
+        state: present
+        name: "{{ item }}"
+      loop:
+        - curl
+        - git
+    
+    - name: Folder
+      ansible.builtin.file:
+        state: directory
+        mode: '0755'
+        path: /opt/my_app

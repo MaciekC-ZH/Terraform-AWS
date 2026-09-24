@@ -1,0 +1,20 @@
+services:
+  web:
+    image: nginx:alpine
+    container_name: app-proxy
+    ports:
+      - "8080:80"
+    depends_on:
+      - cache
+    networks:
+      - app-net
+
+  cache:
+    image: redis:alpine
+    container_name: app-cache
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
